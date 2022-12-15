@@ -13,7 +13,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "m_files")
 @Getter @Setter
-public class FileDb {
+public class MFileDb {
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid2")
