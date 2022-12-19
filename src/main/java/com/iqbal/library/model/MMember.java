@@ -20,15 +20,18 @@ public class MMember {
 
 	private String name;
 
+	private String uniqueCode;
+
 	private String nik;
 
 	private String address;
 
+	@Column(unique=true)
 	private String phone;
 
 	@Column(name = "identification_file_id")
 	private String identificationFileId;
 
-	private String memberStatus;
+	private boolean memberStatus;
 
 }
