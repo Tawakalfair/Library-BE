@@ -15,4 +15,6 @@ public interface FileService {
 
 	public Stream<MFileDb> getAllFiles();
 
+	public void deleteFile(String id) throws Exception;
+
 }

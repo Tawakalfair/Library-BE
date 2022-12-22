@@ -31,6 +31,7 @@ public class MemberServiceImpl implements MemberService {
 		mMember.setIdentificationFileId(mFileDb.getId());
 		String randomCode = util.generateRandomAlphanumeric();
 		mMember.setUniqueCode(randomCode + mMember.getPhone());
+		mMember.setIsActive(true);
 		return memberRepository.save(mMember);
 	}
 
@@ -47,6 +48,24 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MMember> getAll() throws Exception {
 		return memberRepository.findAll();
+	}
+
+	@Override
+	public MMember updateMember(long id, MMember member) throws Exception {
+		Optional<MMember> data = memberRepository.findById(id);
+		MMember mMember = data.get();
+		mMember.setName(member.getName());
+		mMember.setNik(member.getNik());
+		mMember.setPhone(member.getPhone());
+		mMember.setAddress(member.getAddress());
+		return memberRepository.save(mMember);
+	}
+
+	@Override
+	public void deleteMember(Long id) throws Exception {
+		Optional<MMember> data = memberRepository.findById(id);
+		memberRepository.deleteById(id);
+		fileService.deleteFile(data.get().getIdentificationFileId());
 	}
 
 }

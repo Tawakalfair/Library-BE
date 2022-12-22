@@ -32,6 +32,6 @@ public class MMember {
 	@Column(name = "identification_file_id")
 	private String identificationFileId;
 
-	private boolean memberStatus;
+	private Boolean isActive;
 
 }

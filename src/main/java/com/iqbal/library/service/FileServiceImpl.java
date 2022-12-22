@@ -41,4 +41,9 @@ public class FileServiceImpl implements FileService {
 		return fileRepository.findAll().stream();
 	}
 
+	@Override
+	public void deleteFile(String id) throws Exception {
+		fileRepository.deleteById(id);
+	}
+
 }
