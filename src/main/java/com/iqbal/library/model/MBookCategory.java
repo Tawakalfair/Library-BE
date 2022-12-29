@@ -11,12 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "m_book_category")
-@Getter @Setter
 public class MBookCategory {
 
 	@Id
@@ -28,9 +25,32 @@ public class MBookCategory {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private MBook mBook;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "category_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private MCategory mCategory;
 
+	public long getId() {
+		return Id;
+	}
+
+	public void setId(long id) {
+		Id = id;
+	}
+
+	public MBook getmBook() {
+		return mBook;
+	}
+
+	public void setmBook(MBook mBook) {
+		this.mBook = mBook;
+	}
+
+	public MCategory getmCategory() {
+		return mCategory;
+	}
+
+	public void setmCategory(MCategory mCategory) {
+		this.mCategory = mCategory;
+	}
 }

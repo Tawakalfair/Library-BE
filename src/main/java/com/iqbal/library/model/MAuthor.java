@@ -17,5 +17,7 @@ public class MAuthor {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long Id;
 
-	private String name;
+	private String firstName;
+
+	private String lastName;
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,61 +12,63 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.iqbal.library.model.MCategory;
-import com.iqbal.library.service.CategoryService;
+import com.iqbal.library.model.MBookAuthor;
+import com.iqbal.library.service.BookAuthorService;
 
-@Controller
+@RestController
 @RequestMapping("/api")
-public class CategoryController {
+public class BookAuthorController {
 
 	@Autowired
-	private CategoryService categoryService;
+	public BookAuthorService bookAuthorService;
 
-	@GetMapping("/categories")
-	public ResponseEntity<?> getAllCategory() {
+	@GetMapping("/book-authors")
+	public ResponseEntity<?> getAllAuthor() {
 		try {
-			List<MCategory> mCategory = categoryService.getAll();
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			List<MBookAuthor> mBookAuthor = bookAuthorService.getAll();
+			return new ResponseEntity<>(mBookAuthor, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/category/{id}")
-	public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+	@GetMapping("/book-author/{id}")
+	public ResponseEntity<?> getBookAuthorById(@PathVariable Long id) {
 		try {
-			MCategory mCategory = categoryService.getById(id);
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			MBookAuthor mBookAuthor = bookAuthorService.getById(id);
+			return new ResponseEntity<>(mBookAuthor, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PostMapping("/category")
-	public ResponseEntity<?> addCategory(@RequestBody MCategory mCategory) {
+	@PostMapping("/book-author")
+	public ResponseEntity<?> addBookAuthor(@RequestBody MBookAuthor mBookAuthor) {
 		try {
-			categoryService.insertCategory(mCategory);
+			bookAuthorService.insertBookAuthor(mBookAuthor);
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping("/book-author/{id}")
+	public ResponseEntity<?> editAuthor(@PathVariable("id") long id, @RequestBody MBookAuthor mBookAuthor){
+		try {
+			bookAuthorService.updateBookAuthor(id, mBookAuthor);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PutMapping("/category/{id}")
-	public ResponseEntity<?> editCategory(@PathVariable("id") long id, @RequestBody MCategory mCategory){
+	@DeleteMapping("/book-author/{id}")
+	public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id){
 		try {
-			categoryService.updateCategory(id, mCategory);
-			return new ResponseEntity<>("success", HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@DeleteMapping("/category/{id}")
-	public ResponseEntity<?> deleteCategory(@PathVariable("id") Long id){
-		try {
-			categoryService.deleteCategory(id);
+			bookAuthorService.deleteBookAuthor(id);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

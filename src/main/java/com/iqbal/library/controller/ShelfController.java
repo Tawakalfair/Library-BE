@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,61 +12,62 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.iqbal.library.model.MCategory;
-import com.iqbal.library.service.CategoryService;
+import com.iqbal.library.model.MShelf;
+import com.iqbal.library.service.ShelfService;
 
-@Controller
+@RestController
 @RequestMapping("/api")
-public class CategoryController {
+public class ShelfController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private ShelfService shelfService;
 
-	@GetMapping("/categories")
-	public ResponseEntity<?> getAllCategory() {
+	@GetMapping("/shelves")
+	public ResponseEntity<?> getAllShelf() {
 		try {
-			List<MCategory> mCategory = categoryService.getAll();
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			List<MShelf> mShelf = shelfService.getAll();
+			return new ResponseEntity<>(mShelf, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/category/{id}")
-	public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+	@GetMapping("/shelf/{id}")
+	public ResponseEntity<?> getShelfById(@PathVariable Long id) {
 		try {
-			MCategory mCategory = categoryService.getById(id);
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			MShelf mShelf = shelfService.getById(id);
+			return new ResponseEntity<>(mShelf, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PostMapping("/category")
-	public ResponseEntity<?> addCategory(@RequestBody MCategory mCategory) {
+	@PostMapping("/shelf")
+	public ResponseEntity<?> addShelf(@RequestBody MShelf mShelf) {
 		try {
-			categoryService.insertCategory(mCategory);
+			shelfService.insertShelf(mShelf);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PutMapping("/category/{id}")
-	public ResponseEntity<?> editCategory(@PathVariable("id") long id, @RequestBody MCategory mCategory){
+	@PutMapping("/shelf/{id}")
+	public ResponseEntity<?> editShelf(@PathVariable("id") long id, @RequestBody MShelf mShelf){
 		try {
-			categoryService.updateCategory(id, mCategory);
+			shelfService.updateShelf(id, mShelf);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/category/{id}")
-	public ResponseEntity<?> deleteCategory(@PathVariable("id") Long id){
+	@DeleteMapping("/shelf/{id}")
+	public ResponseEntity<?> deletePublisher(@PathVariable("id") Long id){
 		try {
-			categoryService.deleteCategory(id);
+			shelfService.deleteShelf(id);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

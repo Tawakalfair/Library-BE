@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,61 +12,62 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.iqbal.library.model.MCategory;
-import com.iqbal.library.service.CategoryService;
+import com.iqbal.library.model.MPublisher;
+import com.iqbal.library.service.PublisherService;
 
-@Controller
+@RestController
 @RequestMapping("/api")
-public class CategoryController {
+public class PublisherController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private PublisherService publisherService;
 
-	@GetMapping("/categories")
-	public ResponseEntity<?> getAllCategory() {
+	@GetMapping("/publishers")
+	public ResponseEntity<?> getAllPublisher() {
 		try {
-			List<MCategory> mCategory = categoryService.getAll();
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			List<MPublisher> mPublisher = publisherService.getAll();
+			return new ResponseEntity<>(mPublisher, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/category/{id}")
-	public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+	@GetMapping("/publisher/{id}")
+	public ResponseEntity<?> getPublisherById(@PathVariable Long id) {
 		try {
-			MCategory mCategory = categoryService.getById(id);
-			return new ResponseEntity<>(mCategory, HttpStatus.OK);
+			MPublisher mPublisher = publisherService.getById(id);
+			return new ResponseEntity<>(mPublisher, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PostMapping("/category")
-	public ResponseEntity<?> addCategory(@RequestBody MCategory mCategory) {
+	@PostMapping("/publisher")
+	public ResponseEntity<?> addPublisher(@RequestBody MPublisher mPublisher) {
 		try {
-			categoryService.insertCategory(mCategory);
+			publisherService.insertPublisher(mPublisher);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PutMapping("/category/{id}")
-	public ResponseEntity<?> editCategory(@PathVariable("id") long id, @RequestBody MCategory mCategory){
+	@PutMapping("/publisher/{id}")
+	public ResponseEntity<?> editPublisher(@PathVariable("id") long id, @RequestBody MPublisher mPublisher){
 		try {
-			categoryService.updateCategory(id, mCategory);
+			publisherService.updatePublisher(id, mPublisher);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/category/{id}")
-	public ResponseEntity<?> deleteCategory(@PathVariable("id") Long id){
+	@DeleteMapping("/publisher/{id}")
+	public ResponseEntity<?> deletePublisher(@PathVariable("id") Long id){
 		try {
-			categoryService.deleteCategory(id);
+			publisherService.deletePublisher(id);
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
